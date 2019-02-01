@@ -33,6 +33,8 @@ this.io.on('connection',cliente=>{
  
 console.log('Cliente conectado');
 
+//Conectar cliente
+socket.conectarCliente(cliente);
 
 // Mensajes
 
@@ -40,9 +42,15 @@ socket.mensajes(cliente , this.io);
 
 // Desconectar
 
-socket.desconectar( cliente);
+socket.desconectar( cliente, this.io);
+
+// Usuarios logeados o configurados
+socket.connectionUser(cliente, this.io);
+
 
 });
+
+
 
 
 }
