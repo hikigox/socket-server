@@ -19,11 +19,11 @@ export const desconectar = ( cliente: Socket, io:SocketIO.Server) => {
     cliente.on('disconnect', ()=>{
     console.log(usuariosConectados.getUsuario(cliente.id));
     
-   const nombre = usuariosConectados.borrarUsuario(cliente.id)!.nombre;
+    usuariosConectados.borrarUsuario(cliente.id);
 
-   io.emit('mensaje-nuevo',{de: nombre, cuerpo: 'Se ah Desconectado'});
+   
 
-  console.log(`Usuario Eliminado de la sala ${ nombre }`);
+     io.emit('usuarios-activos', usuariosConectados.getLista());
 
     });
 
@@ -44,7 +44,7 @@ export const mensajes = (cliente: Socket, io:SocketIO.Server) => {
     });
     
 
-}
+};
 
 //conexion Usuario
 
@@ -57,7 +57,20 @@ export const connectionUser = (cliente: Socket , io: SocketIO.Server) => {
     mensaje: `Usuario ${payload.nombre}, logeado`
 
     });
+    io.emit('usuarios-activos', usuariosConectados.getLista());
 
 
     })
-}
+};
+
+
+//Emitir el obtener Usuarios 
+
+export const obtenerUsuarios = (cliente: Socket, io: SocketIO.Server) => {
+    
+    cliente.on('obtener-usuarios',()=>{
+
+    io.to(cliente.id).emit('usuarios-activos', usuariosConectados.getLista());
+    });
+
+};

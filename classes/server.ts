@@ -27,7 +27,7 @@ return this._intance = this._intance || (this._intance = new this()) ;
 
 private escucharSockets(){
 
-    console.log('Lista de clientes Conectados');
+console.log('Lista de clientes Conectados');
     
 this.io.on('connection',cliente=>{
  
@@ -47,7 +47,8 @@ socket.desconectar( cliente, this.io);
 // Usuarios logeados o configurados
 socket.connectionUser(cliente, this.io);
 
-
+//Obtener lista de Usuarios
+socket.obtenerUsuarios(cliente,this.io);
 });
 
 

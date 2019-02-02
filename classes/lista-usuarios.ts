@@ -44,7 +44,7 @@ public actulizarNombre(id: string, nombre: string) {
 //Obtener la lista de usuarios
 public getLista(){
 
-return this.lista;
+return this.lista.filter(usuario => usuario.nombre !== 'sin-nombre');
 
 }
 

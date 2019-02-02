@@ -1,5 +1,8 @@
 import { Router } from "express";
 import Server from '../classes/server';
+import { Request, Response } from "express-serve-static-core";
+import { Socket } from 'socket.io';
+import { usuariosConectados } from '../sockets/socket';
 
 
 
@@ -12,6 +15,8 @@ res.json({
     ok: true,
     mensaje: 'Todo esta bien!'
 })
+
+
 
 
 });
@@ -69,6 +74,41 @@ router.post('/mensaje',(req, res) =>{
            });
            
            
+           });
+
+           // Obtener ID de los Usuarios conectados
+           router.get('/usuarios',(req:Request, res: Response) =>{
+            const server = Server.instance;
+
+            server.io.clients((err: any, clientes: Socket)=>{
+                if (err) {
+
+                    return res.json({
+                ok: false,
+                err
+
+                    });
+                }
+
+            res.json({
+                ok: true,
+                clientes
+            });
+
+            })
+
+
+           });
+
+           router.get('/usuarios/detalle', (req:Request, res: Response) =>{
+         usuariosConectados
+
+         res.json({
+    ok: true,
+    clientes: usuariosConectados.getLista()
+
+         })
+
            });
              
 
